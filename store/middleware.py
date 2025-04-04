@@ -1,3 +1,5 @@
+# store/middleware.py
+
 import time
 from django.utils.deprecation import MiddlewareMixin
 from .models import Category
@@ -18,5 +20,7 @@ class CategoryViewTrackingMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if hasattr(request, 'start_time'):
             duration = time.time() - request.start_time
-            print(f"Request to {request.path} took {duration:.2f} seconds.")
+            request.duration = duration
+            if hasattr(response, 'context_data'):
+                response.context_data['request_duration'] = f"{duration:.2f}"
         return response
