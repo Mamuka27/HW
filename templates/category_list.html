@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Categories</title></head>
+<body>
+    <h1>🗂️ Categories</h1>
+    <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'category_detail' category.slug %}">
+                    {{ category.name }}
+                </a>
+                – Viewed {{ category.view_count }} times
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
