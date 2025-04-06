@@ -1,27 +1,35 @@
+from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404
+from .models import Product, Category
 
-from .models import Product
+class HomeView(ListView):
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
 
-def home(request):
-    products = Product.objects.all()
-    return render(request, 'home.html', {'products': products})
 
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'product_list.html', {'products': products})
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product_list.html'
+    context_object_name = 'products'
 
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Product
 
-def category_list(request):
-    categories = Category.objects.all()
-    return render(request, 'category_list.html', {'categories': categories})
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'category_list.html'
+    context_object_name = 'categories'
 
-from .models import Category, Product
 
-def category_detail(request, slug):
-    category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(category=category)
-    return render(request, 'category_detail.html', {
-        'category': category,
-        'products': products
-    })
+class CategoryDetailView(ListView):
+    model = Product
+    template_name = 'category_detail.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return Product.objects.filter(category=self.category)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context

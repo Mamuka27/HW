@@ -99,6 +99,12 @@
                     <div class="product-category">Category: {{ product.category.name }}</div>
                     <div class="product-price">Price: ${{ product.price }}</div>
                     <div class="product-stock">In Stock: {{ product.stock }}</div>
+                    {% if request_duration %}
+    <p style="font-size: 14px; color: gray;">
+        Request Duration: {{ request_duration }} seconds
+    </p>
+{% endif %}
+
                 </div>
             {% endfor %}
         </div>

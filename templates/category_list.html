@@ -6,7 +6,7 @@
     <ul>
         {% for category in categories %}
             <li>
-                <a href="{% url 'category_detail' category.slug %}">
+                <a href="{% url 'store:category_detail' category.slug %}">
                     {{ category.name }}
                 </a>
                 – Viewed {{ category.view_count }} times
