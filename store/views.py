@@ -20,21 +20,6 @@ class CategoryListView(ListView):
     context_object_name = 'categories'
 
 
-<<<<<<< HEAD
-class CategoryDetailView(ListView):
-    model = Product
-    template_name = 'category_detail.html'
-    context_object_name = 'products'
-
-    def get_queryset(self):
-        self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
-        return Product.objects.filter(category=self.category)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['category'] = self.category
-        return context
-=======
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(category=category)
@@ -75,4 +60,3 @@ def product_search(request):
         'categories': categories,
         'query': query,
     })
->>>>>>> 821fd0c718e8e02ba5b1a3db13b7fe3d2aad1d90
